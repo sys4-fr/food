@@ -1,0 +1,49 @@
+[Basic Ingredients]
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:dirt".
+# If you want disable this ingredient you must write "none".
+basic_food_dirt (Ingredient for potato, raw meat) string default:dirt
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:sand".
+# If you want disable this ingredient you must write "none".
+basic_food_sand (Ingredient for egg) string default:sand
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:desert_sand".
+# If you want disable this ingredient you must write "none".
+basic_food_desert_sand (Ingredient for orange, tomato) string default:desert_sand
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:apple".
+# If you want disable this ingredient you must write "none".
+basic_food_apple (Ingredient for potato, cocoa bean, raw meat, carrot, apple juice) string default:apple
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:cactus".
+# If you want disable this ingredient you must write "none".
+basic_food_cactus (Ingredient for cactus juice) string default:cactus
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:dry_shrub".
+# If you want disable this ingredient you must write "none".
+basic_food_dry_shrub (Ingredient for wheat) string default:dry_shrub
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "bucket:bucket_water".
+# If you want disable this ingredient you must write "none".
+basic_food_bucket_water (Ingredient for milk, tomato soup, chicken soup) string bucket:bucket_water
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "bucket:bucket_river_water".
+# If you want disable this ingredient you must write "none".
+basic_food_bucket_river_water (In the same group as basic_food_bucket_water) string bucket:bucket_river_water
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "bucket:bucket_empty".
+# If you want disable this ingredient you must write "none".
+basic_food_bucket_empty (Item replacement when cooking with the above two ingredients) string bucket:bucket_empty
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:papyrus".
+# If you want disable this ingredient you must write "none".
+basic_food_papyrus (Ingredient for sugar) string default:papyrus
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "default:clay_lump".
+# If you want disable this ingredient you must write "none".
+basic_food_clay (Ingredient for bowl) string default:clay_lump
+# Basic ingredient you may use instead of the default one defined by the mod.
+# Default is "vessels:drinking_glass".
+# If you want disable this ingredient you must write "none".
+basic_food_cup (Ingredient for apple|orange|cactus juice) string vessels:drinking_glass

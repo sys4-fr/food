@@ -3,7 +3,7 @@ The Food Mod
 
 This is the main mod in the food mod collection.
 
-Version 2.3
+Version 2.4
 
 The Aims
 --------

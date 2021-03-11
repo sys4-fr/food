@@ -10,13 +10,13 @@ food = {
 	modules = {},
 	disabled_modules = {},
 	debug = false,
-	version = 2.3,
+	version = 2.4,
 	disable_fallbacks =
-		minetest.setting_getbool("food.disable_fallbacks")
+		minetest.settings:get_bool("food.disable_fallbacks")
 }
 
 -- Checks for external content, and adds support
-function food.support(group, item)
+function food.support(group, item, add_it)
 	if type(group) == "table" then
 		for i = 1, #group do
 			food.support(group[i], item)
@@ -49,8 +49,7 @@ function food.support(group, item)
 		return
 	end
 
-
-	food.disable(group)
+	if not add_it then food.disable(group) end
 
 	-- Add group
 	local g = {}
@@ -168,9 +167,9 @@ local global_exists = minetest.global_exists or function(name)
 end
 
 -- Checks for hunger mods to register food on
-function food.item_eat(amt)
+function food.item_eat(amt, repl_item)
 	if minetest.get_modpath("diet") and global_exists("diet") and diet.item_eat then
-		return diet.item_eat(amt)
+		return diet.item_eat(amt, repl_item)
 	elseif minetest.get_modpath("hud") and global_exists("hud") and hud.item_eat then
 		return hud.item_eat(amt)
 	elseif minetest.get_modpath("hbhunger") then
@@ -182,13 +181,14 @@ function food.item_eat(amt)
 			return hunger.item_eat(amt)
 		end
 	else
-		return minetest.item_eat(amt)
+		return minetest.item_eat(amt, repl_item)
 	end
 end
 
 -- Registers craft item or node depending on settings
 function food.register(name, data, mod)
-	if (minetest.setting_getbool("food_use_2d") or (mod ~= nil and minetest.setting_getbool("food_"..mod.."_use_2d"))) then
+	if (minetest.settings:get_bool("food_use_2d")
+		 or (mod and minetest.setting_getbool("food_"..mod.."_use_2d"))) then
 		minetest.register_craftitem(name,{
 			description = data.description,
 			inventory_image = data.inventory_image,

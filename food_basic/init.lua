@@ -6,8 +6,9 @@
 -- Some basic foods
 -- =====================================
 
-print("Food Mod - Version 2.3")
+print("Food Mod - Version 2.4")
 
+dofile(minetest.get_modpath("food_basic").."/settings.lua")
 dofile(minetest.get_modpath("food_basic").."/support.lua")
 dofile(minetest.get_modpath("food_basic").."/ingredients.lua")
 
@@ -18,6 +19,21 @@ if minetest.get_modpath("intllib") then
 else
 	S = function ( s ) return s end
 end
+
+-- Register Venison
+food.module("meat_cooked", function()
+	minetest.register_craftitem(":food:meat", {
+		description = S("Venison"),
+		inventory_image = "food_meat.png",
+		groups = {food_meat=1, food_meat_cooked=1}
+	})
+	food.craft({
+		type = "cooking",
+		output = "food:meat",
+		recipe = "group:food_meat_raw",
+		cooktime = 30
+	})
+end)
 
 -- Register dark chocolate
 food.module("dark_chocolate", function()
@@ -48,7 +64,10 @@ food.module("milk_chocolate", function()
 		recipe = {
 				{"","group:food_milk",""},
 				{"group:food_cocoa","group:food_cocoa","group:food_cocoa"}
-		}
+		},
+		replacements = {{"mobs:bucket_milk", "bucket:bucket_empty"},
+			{"mobs:glass_milk", "vessels:drinking_glass"},
+			{"farming:soy_milk", "vessels:drinking_glass"}}
 	})
 end)
 
@@ -89,19 +108,17 @@ food.module("pasta_bake", function()
 			{"group:food_cheese"},
 			{"group:food_pasta"},
 			{"group:food_bowl"}
-		}
+		},
 	})
 end)
 
 -- Register Soups
-local chicken = "meat"
-if minetest.get_modpath("mobs") and mobs.mod == "redo" then
-	chicken = "chicken"
-end
 local soups = {
 	{"tomato", "tomato"},
-	{"chicken", chicken}
+	{"chicken", "meat_raw"}
 }
+local repl_bucket = food.bing["bucket_empty"] ~= "none" and
+	{{"group:food_water_bucket", food.bing["bucket_empty"].." 2"}} or nil
 for i=1, #soups do
 	local flav = soups[i]
 	food.module("soup_"..flav[1], function()
@@ -114,7 +131,6 @@ for i=1, #soups do
 		minetest.register_craftitem(":food:soup_"..flav[1].."_raw",{
 			description = S("Uncooked ".. flav[1].." Soup"),
 			inventory_image = "food_soup_"..flav[1].."_raw.png",
-
 		})
 		food.craft({
 			type = "cooking",
@@ -125,10 +141,10 @@ for i=1, #soups do
 			output = "food:soup_"..flav[1].."_raw",
 			recipe = {
 				{"", "", ""},
-				{"bucket:bucket_water", "group:food_"..flav[2], "bucket:bucket_water"},
+				{"group:food_water_bucket", "group:food_"..flav[2], "group:food_water_bucket"},
 				{"", "group:food_bowl", ""},
 			},
-			replacements = {{"bucket:bucket_water", "bucket:bucket_empty"},{"bucket:bucket_water", "bucket:bucket_empty"}}
+			replacements = repl_bucket
 		})
 	end)
 end
@@ -141,14 +157,15 @@ for i=1, #juices do
 		minetest.register_craftitem(":food:"..flav.."_juice", {
 			description = S(flav.." Juice"),
 			inventory_image = "food_"..flav.."_juice.png",
-			on_use = food.item_eat(2),
+			on_use = food.item_eat(2, food.bing["cup"]),
+			groups = {["food_"..flav.."_juice"] = 1, vessel = 1}
 		})
 		food.craft({
-			output = "food:"..flav.."_juice 4",
+			output = "food:"..flav.."_juice",
 			recipe = {
 				{"","",""},
 				{"","group:food_"..flav,""},
-				{"","group:food_cup",""},
+				{"",food.bing["cup"],""},
 			}
 		})
 	end)
@@ -158,16 +175,27 @@ food.module("rainbow_juice", function()
 	minetest.register_craftitem(":food:rainbow_juice", {
 		description = S("Rainbow Juice"),
 		inventory_image = "food_rainbow_juice.png",
-		on_use = food.item_eat(20),
+		on_use = food.item_eat(20, food.bing["cup"]),
+		groups = { vessel = 1 }
 	})
 
+	if minetest.registered_items["default:nyancat_rainbow"] then
+		food.craft({
+			output = "food:rainbow_juice 99",
+			recipe = {
+				{"","",""},
+				{"","default:nyancat_rainbow",""},
+				{"",food.bing["cup"],""},
+			}
+		})
+	end
 	food.craft({
-		output = "food:rainbow_juice 99",
-		recipe = {
-			{"","",""},
-			{"","default:nyancat_rainbow",""},
-			{"","group:food_cup",""},
-		}
+			output = "food:rainbow_juice 3",
+			recipe = {
+				{"group:food_apple_juice","group:food_apple_juice","group:food_apple_juice"},
+				{"group:food_orange_juice","group:food_orange_juice","group:food_orange_juice"},
+				{"group:food_cactus_juice","group:food_cactus_juice","group:food_cactus_juice"}
+			}
 	})
 end)
 

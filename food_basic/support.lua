@@ -12,35 +12,52 @@
 -- good for the end user
 
 -- Add support for other mods
-food.support("cocoa", "farming_plus:cocoa_bean")
-food.support("cup", "vessels:drinking_glass")
-food.support("cactus", "default:cactus")
-food.support("apple", "default:apple")
+food.support("flour", {
+	"farming:flour",
+	"farming:flour_multigrain",
+})
+food.support("wheat", "farming:wheat")
+food.support("bowl", "farming:bowl")
+food.support("cocoa", {"farming_plus:cocoa_bean", "farming:cocoa_beans"})
+food.support("cup", food.bing["cup"])
+food.support("cactus", food.bing["cactus"])
+food.support("apple", food.bing["apple"])
 food.support("orange", {
 	"farming_plus:orange_item",
-	"ethereal:orange",
+	"ethereal:orange"
 })
 food.disable_if("ethereal", "orange")
 
 food.support("potato", {
 	"docfarming:potato",
 	"veggies:potato",
-	"farming_plus:potato_item"
+	"farming_plus:potato_item",
+	"farming:potato"
 })
 food.support("tomato", {
 	"farming_plus:tomato_item",
-	"plantlib:tomato"
+	"plantlib:tomato",
+	"farming:tomato"
 })
 food.support("carrot", {
 	"farming_plus:carrot_item",
 	"docfarming:carrot",
 	"plantlib:carrot",
-	"jkfarming:carrot"
+	"jkfarming:carrot",
+	"farming:carrot"
 })
 food.support("milk", {
 	"animalmaterials:milk",
 	"my_mobs:milk_glass_cup",
-	"mtfoods:dandelion_milk"
+	"mtfoods:dandelion_milk",
+	"mobs:glass_milk",
+	"farming:soy_milk"
+})
+food.support("butter", "mobs:butter")
+food.support("cheese", "mobs:cheese")
+food.support("water_bucket", {
+	food.bing["bucket_water"],
+	food.bing["bucket_river_water"]
 })
 food.support("milkbucket", {
 	"jkanimals:bucket_milk",
@@ -52,42 +69,31 @@ food.support("egg", {
 	"jkanimals:egg",
 	"mobs:egg"
 })
-food.support("meat", {
+food.support("meat_cooked", {
 	"mobs:meat",
 	"jkanimals:meat",
 	"mobfcooking:cooked_pork",
 	"mobfcooking:cooked_beef",
 	"mobfcooking:cooked_chicken",
 	"mobfcooking:cooked_lamb",
-	"mobfcooking:cooked_venison"
+	"mobfcooking:cooked_venison",
+	"farming:tofu_cooked"
+})
+food.support("meat_raw", {
+	"mobs:meat_raw",
+	"mobs:chicken_raw",
+	"farming:tofu"
 })
 food.support("sugar", {
 	"jkfarming:sugar",
 	"bushes:sugar",
-	"mtfoods:sugar"
+	"mtfoods:sugar",
+	"mobs:honey",
+	"farming:sugar"
 })
-
-if farming and farming.mod == "redo" then
-	food.support("wheat", "farming:wheat")
-	food.support("flour", "farming:flour")
-	food.support("carrot", "farming:carrot")
-	food.support("potato", "farming:potato")
-	food.support("tomato", "farming:tomato")
-	food.support("cocoa", "farming:cocoa_beans")
-	food.support("coffee", "farming:coffee_beans")
-	food.support("dark_chocolate", "farming:chocolate_dark")
-	food.support("sugar", "farming:sugar")
-	food.support("cup", "farming:drinking_cup")
-	food.disable_if("farming", "baked_potato")
-else
-	food.support("wheat", "farming:wheat")
-	food.support("flour", "farming:flour")
-end
-
-if minetest.get_modpath("mobs") and mobs.mod == "redo" then
-	if minetest.get_modpath("mobs_animal") then
-		food.support("chicken", "mobs:chicken_cooked")
-	else
-		food.support("chicken", "mobs:meat")
-	end
-end
+food.support("cactus_juice", "farming:cactus_juice")
+food.support("orange_juice", "farming:carrot_juice", true)
+food.support("apple_juice", "farming:pineapple_juice", true)
+food.support("dark_chocolate", "farming:chocolate_dark")
+food.support("baked_potato", "farming:baked_potato")
+food.support("pasta", "farming:pasta")
