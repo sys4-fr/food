@@ -188,7 +188,7 @@ end
 -- Registers craft item or node depending on settings
 function food.register(name, data, mod)
 	if (minetest.settings:get_bool("food_use_2d")
-		 or (mod and minetest.setting_getbool("food_"..mod.."_use_2d"))) then
+		 or (mod and minetest.settings:get_bool("food_"..mod.."_use_2d"))) then
 		minetest.register_craftitem(name,{
 			description = data.description,
 			inventory_image = data.inventory_image,
@@ -207,7 +207,7 @@ function food.register(name, data, mod)
 			paramtype = "light",
 			node_box = data.node_box
 		}
-		if (minetest.setting_getbool("food_2d_inv_image")) then
+		if (minetest.settings:get_bool("food_2d_inv_image")) then
 			newdata.inventory_image = data.inventory_image
 		end
 		minetest.register_node(name,newdata)
